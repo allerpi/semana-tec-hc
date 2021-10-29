@@ -9,6 +9,7 @@ Exercises
 5. Make the ghosts smarter.
 
 """
+from time import sleep
 
 from random import choice
 from turtle import *
@@ -21,10 +22,10 @@ writer = Turtle(visible=False)
 aim = vector(5, 0)
 pacman = vector(-40, -80)
 ghosts = [
-    [vector(-180, 160), vector(5, 0)],
-    [vector(-180, -160), vector(0, 5)],
-    [vector(100, 160), vector(0, -5)],
-    [vector(100, -160), vector(-5, 0)],
+    [vector(-180, 160), vector(5, 0), '#ff0000'],
+    [vector(-180, -160), vector(0, 5), '#ffb8ff'],
+    [vector(100, 160), vector(0, -5), '#00ffff'],
+    [vector(100, -160), vector(-5, 0), '#ffb852'],
 ]
 # fmt: off
 tiles = [
@@ -131,7 +132,7 @@ def move():
     goto(pacman.x + 10, pacman.y + 10)
     dot(20, 'yellow')
 
-    for point, course in ghosts:
+    for point, course, colour in ghosts:
         if valid(point + course):
             point.move(course)
         else:
@@ -147,12 +148,15 @@ def move():
 
         up()
         goto(point.x + 10, point.y + 10)
-        dot(20, 'red')
+        dot(20, colour)
 
     update()
 
-    for point, course in ghosts:
+    for point, course, colour in ghosts:
         if abs(pacman - point) < 20:
+            print('Game over')
+            sleep(3)
+            bye()
             return
 
     ontimer(move, 100)

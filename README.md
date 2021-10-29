@@ -8,4 +8,5 @@ Valeria:
 
 ## Cambios a Pacman
 Valeria:
-- Cambiar el board
+- Cambiar color de fantasmas
+- Cerrar la ventana cuando acaba el juego
