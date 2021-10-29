@@ -8,7 +8,7 @@ Exercises
 4. Change the snake to respond to mouse clicks.
 
 """
-
+from time import sleep
 from random import randrange
 from turtle import *
 
@@ -17,7 +17,7 @@ from freegames import square, vector
 food = vector(0, 0)
 snake = [vector(10, 0)]
 aim = vector(0, -10)
-
+speed = int(450)
 
 def change(x, y):
     "Change snake direction."
@@ -31,6 +31,7 @@ def inside(head):
 
 
 def move():
+    global speed
     "Move snake forward one segment."
     head = snake[-1].copy()
     head.move(aim)
@@ -38,6 +39,9 @@ def move():
     if not inside(head) or head in snake:
         square(head.x, head.y, 9, 'red')
         update()
+        print('Game over')
+        sleep(3)
+        bye()
         return
 
     snake.append(head)
@@ -46,6 +50,7 @@ def move():
         print('Snake:', len(snake))
         food.x = randrange(-15, 15) * 10
         food.y = randrange(-15, 15) * 10
+        speed = int(speed*0.8)
     else:
         snake.pop(0)
 
@@ -56,7 +61,7 @@ def move():
 
     square(food.x, food.y, 9, 'green')
     update()
-    ontimer(move, 100)
+    ontimer(move, speed)
 
 
 setup(420, 420, 370, 0)
