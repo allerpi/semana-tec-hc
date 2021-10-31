@@ -21,7 +21,7 @@ from turtle import *
 
 from freegames import floor, vector
 
-state = {'score': 0}
+state = {'score': 0, 'ghostSpeed': 100}
 path = Turtle(visible=False)
 writer = Turtle(visible=False)
 aim = vector(5, 0)
@@ -115,11 +115,19 @@ def world():
 
 
 def move():
+    tempScore = state['score']
     "Move pacman and all ghosts."
     writer.undo()
     writer.write(state['score'])
 
     clear()
+
+    if state['score'] == 160:
+        print('Congratulations, YOU WON!')
+        print('Game over')
+        sleep(3)
+        bye()
+        return
 
     if valid(pacman + aim):
         pacman.move(aim)
@@ -137,6 +145,19 @@ def move():
     goto(pacman.x + 10, pacman.y + 10)
     dot(20, 'yellow')
 
+    for point, course, colour in ghosts:
+        if abs(pacman - point) < 20:
+            print('Game over')
+            sleep(3)
+            bye()
+            return
+
+    if (tempScore != state['score'] and state['score'] % 16 == 0):
+        state['ghostSpeed'] -= 10
+
+    ontimer(move, 100)
+
+def moveGhosts():
     for point, course, colour in ghosts:
         if valid(point + course):
             point.move(course)
@@ -157,14 +178,7 @@ def move():
 
     update()
 
-    for point, course, colour in ghosts:
-        if abs(pacman - point) < 20:
-            print('Game over')
-            sleep(3)
-            bye()
-            return
-
-    ontimer(move, 100)
+    ontimer(moveGhosts, state['ghostSpeed'])
 
 
 def change(x, y):
@@ -187,4 +201,5 @@ onkey(lambda: change(0, 5), 'Up')
 onkey(lambda: change(0, -5), 'Down')
 world()
 move()
+moveGhosts()
 done()

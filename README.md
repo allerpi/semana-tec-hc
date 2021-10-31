@@ -10,7 +10,8 @@ Luis Fernández - A01023675
 2. Desde la terminal ir a la ubicación del archivo .py descargado
 3. Checar si el módulo 'freegames' está instalado con el comando:  
   `pip show freegames`  
-  **Si no está instalado freegames**  
+
+  **Si no está instalado freegames:**  
   1.  Correr  el comando de instalación:
     `pip install freegames`  
     (NOTA: Utilizar pip o pip3 dependiendo de la versión de Python a utilizarse)  

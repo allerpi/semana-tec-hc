@@ -76,6 +76,7 @@ def move():
         food.y = randrange(-15, 15) * 10
         speed = int(speed*0.8)
     elif head == powerup:
+        state['powerup'] = True
         speed = int(speed*2)
         powerup.x = 1000
         powerup.y = 0
