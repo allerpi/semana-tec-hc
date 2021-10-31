@@ -3,6 +3,7 @@
 Valeria Pineda - A01023979  
 Luis Fernández - A01023675  
 
+[Video de funcionamiento)[https://youtu.be/eyNxutgErUs]
 ---
 
 ## Instrucciones de Uso
