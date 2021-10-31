@@ -7,6 +7,11 @@ Exercises
 3. How would you move the food?
 4. Change the snake to respond to mouse clicks.
 
+Modders
+
+- Valeria Pineda (A01023979)
+- Luis Fernández (A01023675)
+
 """
 from time import sleep
 from random import randrange
@@ -15,9 +20,11 @@ from turtle import *
 from freegames import square, vector
 
 food = vector(0, 0)
+powerup = vector(1000,0)
 snake = [vector(10, 0)]
 aim = vector(0, -10)
 speed = int(450)
+state = {'score': 0, 'powerup': True}
 
 def change(x, y):
     "Change snake direction."
@@ -36,6 +43,22 @@ def move():
     head = snake[-1].copy()
     head.move(aim)
 
+    if state['score'] % 10 == 0 and state['score'] != 0 and state['powerup']:
+        state['powerup'] = False
+        powerup.x = randrange(-15, 15) * 10
+        powerup.y = randrange(-15, 15) * 10
+
+    if state['score'] == 100:
+        square(head.x, head.y, 9, '#D4AF37')
+        for body in snake:
+            square(body.x, body.y, 9, '#D4AF37')
+        update()
+        print('Congratulations, YOU WON!')
+        print('Game over')
+        sleep(3)
+        bye()
+        return
+
     if not inside(head) or head in snake:
         square(head.x, head.y, 9, 'red')
         update()
@@ -47,10 +70,15 @@ def move():
     snake.append(head)
 
     if head == food:
-        print('Snake:', len(snake))
+        state['score'] += 1
+        print('Snake:', state['score'])
         food.x = randrange(-15, 15) * 10
         food.y = randrange(-15, 15) * 10
         speed = int(speed*0.8)
+    elif head == powerup:
+        speed = int(speed*2)
+        powerup.x = 1000
+        powerup.y = 0
     else:
         snake.pop(0)
 
@@ -60,6 +88,7 @@ def move():
         square(body.x, body.y, 9, 'black')
 
     square(food.x, food.y, 9, 'green')
+    square(powerup.x, powerup.y, 9, 'blue')
     update()
     ontimer(move, speed)
 

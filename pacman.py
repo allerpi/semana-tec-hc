@@ -8,6 +8,11 @@ Exercises
 4. Make the ghosts faster/slower.
 5. Make the ghosts smarter.
 
+Modders
+
+- Valeria Pineda (A01023979)
+- Luis Fernández (A01023675)
+
 """
 from time import sleep
 
